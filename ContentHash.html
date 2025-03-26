@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Content Hash Calculator</title>
+		<script type="text/javascript" src="https://unpkg.com/content-hash/dist/index.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/multiformats/dist/index.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+		
+	</head>
+	<body>
+		<h2 class="title is-size-1 has-text-centered">Content Hash Calculator</h2>
+		<p class="has-text-centered">Implemented using libraries <a href="https://github.com/pldespaigne/content-hash" target="_blank">content-hash</a> & <a href="https://github.com/multiformats/js-multiformats" target="_blank">multiformats</a>.</p>
+		<p class="has-text-centered">Docs <a href="https://docs.ipfs.tech/concepts/content-addressing/#cid-conversion" target="_blank">docs.ipfs.tech</a></p>
+		
+		<div class="section">
+			<h3 class="title">CIDv1 -> content hash</h3>
+			<input id="ipfs-input" class="level-item input" type="text" value="">
+			<button id="ipfs-encode" class="button is-primary">Encode</button>
+			<p id="ipfs-result"></p>
+		</div>
+		<div class="section">
+			<h3 class="title">content hash -> CIDv0 & CIDv1</h3>
+			<input id="content-input" class="input" type="text" value="">
+			<button id="content-decode" class="button is-primary">Decode</button>
+			<p>CIDv0: <a href="#" target="_blank" id="CIDv0-result"></a></p>
+			<p>CIDv1: <a href="#" target="_blank" id="CIDv1-result"></a></p>
+		</div>
+		<footer class="footer">
+			<div class="content has-text-centered">
+				<p>content-hash: <a href="https://github.com/pldespaigne/content-hash" target="_blank">Github</a> & <a href="https://www.npmjs.com/package/content-hash" target="_blank">NPM package</a></p>
+				<p>multiformats: <a href="https://github.com/multiformats/js-multiformats" target="_blank">Github</a> & <a href="https://www.npmjs.com/package/multiformats" target="_blank">NPM package</a></p>
+			</div>
+		</footer>
+	</body>
+	
+	<script>
+		window.onload = () => {
+			console.log('init ✅')
+
+			const ipfsInputElem = document.getElementById('ipfs-input')
+			const ipfsButtonElem = document.getElementById('ipfs-encode')
+			const ipfsResultElem = document.getElementById('ipfs-result')
+			ipfsButtonElem.addEventListener('click', () => {
+				const v1 = Multiformats.CID.parse(ipfsInputElem.value)
+				const v0 = v1.toV0().toString()
+				ipfsResultElem.innerHTML = contentHash.fromIpfs(v0)
+			})
+
+			const contentInputElem = document.getElementById('content-input')
+			const contentButtonElem = document.getElementById('content-decode')
+			const CIDv0ResultElem = document.getElementById('CIDv0-result')
+			const CIDv1ResultElem = document.getElementById('CIDv1-result')
+			contentButtonElem.addEventListener('click', () => {
+				let v0 = contentHash.decode(contentInputElem.value)
+				let url = 'https://ipfs.io/ipfs/' + v0 + '/'
+				CIDv0ResultElem.innerHTML = v0
+				CIDv0ResultElem.href = url
+				
+				let v1 = contentHash.helpers.cidV0ToV1Base32(v0)
+				url = 'https://ipfs.io/ipfs/' + v1 + '/'
+				CIDv1ResultElem.innerHTML = v1
+				CIDv1ResultElem.href = url
+			})
+		}
+	</script>
+</html>
