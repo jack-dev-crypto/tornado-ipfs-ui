@@ -16,7 +16,7 @@ RUN ipfs init
 
 ENV GIT_REPOSITORY=https://codeberg.org/torndao/classic-ui.git
 # From development branch, double check with tornadocash.eth.limo
-ENV GIT_COMMIT_HASH=ed62d9ef1798de9da443784e4a303e87c3a124b2
+ENV GIT_COMMIT_HASH=e312df5a4f6caaa7e93f1b5960c603d8dd7ec67a
 
 # clone the repository
 RUN mkdir /app/
