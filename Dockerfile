@@ -14,9 +14,9 @@ RUN wget -qO - https://dist.ipfs.tech/kubo/v0.29.0/kubo_v0.29.0_linux-amd64.tar.
 	&& rm -rf kubo
 RUN ipfs init
 
-ENV GIT_REPOSITORY=https://github.com/tornado-dao/classic-ui.git
+ENV GIT_REPOSITORY=https://github.com/torndao777-eng/classic-ui.git
 # From development branch, double check with tornadocash.eth.limo
-ENV GIT_COMMIT_HASH=17c54dae9ad91bb3c6d62a7860df6cd365ab76d4
+ENV GIT_COMMIT_HASH=8af0abd14d7eeb734f943b968ce687cb5946eac6
 
 # clone the repository
 RUN mkdir /app/
